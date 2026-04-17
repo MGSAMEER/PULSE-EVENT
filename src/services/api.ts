@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const rawApiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+let rawApiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+if (!rawApiUrl.startsWith('http://') && !rawApiUrl.startsWith('https://')) {
+  rawApiUrl = `https://${rawApiUrl}`;
+}
 const API_BASE_URL = rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl.replace(/\/$/, '')}/api`;
 
 const api = axios.create({
