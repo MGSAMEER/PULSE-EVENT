@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import { Users, PlusCircle, Trash2, ShieldCheck, UserMinus, Shield, X } from 'lucide-react';
+import { PlusCircle, ShieldCheck, UserMinus, Shield, X } from 'lucide-react';
 
 
 const StaffManagement: React.FC = () => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import api from '../services/api';
-import { ExternalLink, Calendar, MapPin, Globe, Zap, Sparkles, ChevronRight, ChevronLeft, Flame, Info, Activity } from 'lucide-react';
+import { ExternalLink, Calendar, MapPin, Globe, Sparkles, ChevronRight, ChevronLeft, Info, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const ExternalEventDiscovery: React.FC = () => {
@@ -71,7 +71,7 @@ const ExternalEventDiscovery: React.FC = () => {
                 transition={{ delay: i * 0.1 }}
                 className="group glass-card border-none hover:border-primary/20 aspect-[16/10] relative rounded-[2.5rem] overflow-hidden"
               >
-                <img src={event.image || "/fallback-event.jpg"} className="absolute inset-0 w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" />
+                <img src={event.image || "/fallback-event.jpg"} alt={event.title} className="absolute inset-0 w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B] via-[#0A0A0B]/20 to-transparent" />
                 
                 <div className="absolute top-6 left-6 flex gap-2">
@@ -123,7 +123,7 @@ const ExternalEventDiscovery: React.FC = () => {
                 className="flex-shrink-0 w-[350px] glass p-2 rounded-[2.5rem] border-white/5 hover:border-primary/10 transition-all group"
               >
                 <div className="aspect-[4/3] relative rounded-[2rem] overflow-hidden">
-                  <img src={event.image || "/fallback-event.jpg"} className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700" />
+                  <img src={event.image || "/fallback-event.jpg"} alt={event.title} className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700" />
                   <div className="absolute top-4 left-4">
                     <span className="px-3 py-1 glass text-[8px] font-bold text-white uppercase tracking-widest rounded-lg border-white/10">External Access</span>
                   </div>
@@ -183,7 +183,7 @@ const ExternalEventDiscovery: React.FC = () => {
                 className="flex gap-8 p-6 glass rounded-[2.5rem] border-white/5 hover:border-primary/20 transition-all group"
               >
                 <div className="w-28 h-28 rounded-3xl overflow-hidden flex-shrink-0 border border-white/5">
-                  <img src={event.image} className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700" />
+                  <img src={event.image} alt={event.title} className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700" />
                 </div>
                 <div className="flex-grow pt-2 space-y-4">
                   <div className="flex justify-between items-start">

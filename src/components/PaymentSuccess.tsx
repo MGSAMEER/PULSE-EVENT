@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { CheckCircle, Calendar, MapPin, ArrowRight, Download, Ticket } from 'lucide-react';
+import { CheckCircle, Calendar, MapPin, ArrowRight, Ticket } from 'lucide-react';
 
 const PaymentSuccess: React.FC = () => {
   const navigate = useNavigate();

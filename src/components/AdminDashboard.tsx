@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
@@ -77,23 +77,7 @@ const AdminDashboard: React.FC = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-
-
-    if (authLoading) return;
-
-    // Check admin/organizer role
-    if (!user || (user.role !== 'ADMIN' && user.role !== 'ORGANIZER')) {
-      console.warn('⚠️ Unauthorized access detected - Redirecting');
-      navigate('/');
-      return;
-    }
-
-    // Fetch data for current tab
-    fetchData();
-  }, [activeTab, user, authLoading, navigate]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       if (activeTab === 'overview' || activeTab === 'analytics') {
@@ -121,7 +105,23 @@ const AdminDashboard: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab]);
+
+  useEffect(() => {
+
+
+    if (authLoading) return;
+
+    // Check admin/organizer role
+    if (!user || (user.role !== 'ADMIN' && user.role !== 'ORGANIZER')) {
+      console.warn('⚠️ Unauthorized access detected - Redirecting');
+      navigate('/');
+      return;
+    }
+
+    // Fetch data for current tab
+    fetchData();
+  }, [activeTab, user, authLoading, navigate, fetchData]);
 
   const exportToExcel = (data: any[], fileName: string) => {
     const ws = XLSX.utils.json_to_sheet(data);
@@ -729,7 +729,7 @@ const AdminDashboard: React.FC = () => {
                       <tr key={e._id} className="hover:bg-[var(--bg-main)] transition-colors">
                         <td className="px-10 py-8">
                           <div className="flex items-center gap-4">
-                            {e.image && <img src={e.image} className="w-12 h-12 rounded-lg object-cover" />}
+                            {e.image && <img src={e.image} alt={e.title} className="w-12 h-12 rounded-lg object-cover" />}
                             <div>
                               <div className="font-black text-sm text-[var(--text-main)] mb-1">{e.title}</div>
                               <div className="text-[10px] text-[var(--text-muted)] font-bold">{e.category}</div>
@@ -1011,6 +1011,7 @@ const AdminDashboard: React.FC = () => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const StatCard = ({ title, value, icon, trend, trendColor = "text-primary" }: any) => {
   return (
     <div className="glass-card p-8 h-[160px] flex flex-col justify-between group relative overflow-hidden">

@@ -30,6 +30,7 @@ const Bookings: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [eventSponsors, setEventSponsors] = useState<Record<string, any>>({});
   
   const ticketTemplateRef = useRef<HTMLDivElement>(null);
@@ -68,6 +69,7 @@ const Bookings: React.FC = () => {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDownload = async (booking: Booking) => {
     if (downloadingId) return;
     setDownloadingId(booking._id);

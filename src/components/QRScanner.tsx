@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BrowserMultiFormatReader } from '@zxing/library';
-import { CheckCircle, XCircle, Loader, RefreshCw, Smartphone, Camera, ShieldAlert, Zap, Info, ArrowRight, ShieldCheck, Activity } from 'lucide-react';
+import { CheckCircle, XCircle, RefreshCw, ShieldAlert, Info, ShieldCheck, Activity } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';

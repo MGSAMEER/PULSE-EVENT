@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Star, Zap, Globe, Award } from 'lucide-react';
+import { ExternalLink, Award } from 'lucide-react';
 
 interface Sponsor {
   _id: string;

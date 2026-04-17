@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, useSearchParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { Lock, Save, CheckCircle, Activity, AlertCircle } from 'lucide-react';
 import api from '../services/api';
 

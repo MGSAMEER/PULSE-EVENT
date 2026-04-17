@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { CheckCircle, XCircle, Loader2, ArrowRight } from 'lucide-react';
 import api from '../services/api';
 
@@ -7,7 +7,6 @@ const VerifyEmail: React.FC = () => {
     const { token } = useParams<{ token: string }>();
     const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
     const [message, setMessage] = useState('');
-    const navigate = useNavigate();
 
     useEffect(() => {
         const verify = async () => {

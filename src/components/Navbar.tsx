@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { BookOpenIcon, InfoIcon, LifeBuoyIcon, LogOut, Ticket, LayoutDashboard, Search, User } from 'lucide-react';
+import { BookOpenIcon, InfoIcon, LogOut, Ticket, LayoutDashboard, Search } from 'lucide-react';
 import { Button } from './ui/button';
 import {
   NavigationMenu,
@@ -10,14 +10,12 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
 } from "./ui/navigation-menu"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "./ui/popover"
-import { cn } from '../lib/utils';
 
 interface NavbarProps {
   onMenuToggle?: (isOpen: boolean) => void;
@@ -146,12 +144,12 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuToggle }) => {
                   {dynamicLinks.map((link, index) => (
                     <NavigationMenuItem key={index}>
                        <NavigationMenuLink asChild>
-                          <a
+                          <button
                              onClick={() => navigate(link.path)}
                              className={`hover:text-white py-1.5 px-3 font-medium cursor-pointer rounded-lg transition-colors flex items-center gap-2 ${isActive(link.path) ? 'text-white bg-[#151821]' : 'text-[#A1A1AA] hover:bg-[#151821]/50'}`}
                            >
                              {link.label}
-                           </a>
+                           </button>
                         </NavigationMenuLink>
                     </NavigationMenuItem>
                   ))}
@@ -165,7 +163,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuToggle }) => {
                       <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                          <li>
                            <NavigationMenuLink asChild>
-                             <a onClick={() => navigate('/')} className="block cursor-pointer select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#151821] hover:text-white focus:bg-[#151821] focus:text-white">
+                             <button onClick={() => navigate('/')} className="block cursor-pointer select-none space-y-1 rounded-md p-3 text-left w-full leading-none no-underline outline-none transition-colors hover:bg-[#151821] hover:text-white focus:bg-[#151821] focus:text-white">
                                <div className="flex items-center gap-2 text-[#FFFFFF]">
                                  <BookOpenIcon size={16} className="text-[#A1A1AA]" />
                                  <div className="text-sm font-medium leading-none">Getting Started</div>
@@ -173,12 +171,12 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuToggle }) => {
                                <p className="line-clamp-2 text-sm leading-snug text-[#A1A1AA] pt-1.5">
                                  Learn exactly how to start buying and organizing tickets.
                                </p>
-                             </a>
+                             </button>
                            </NavigationMenuLink>
                          </li>
                          <li>
                            <NavigationMenuLink asChild>
-                             <a onClick={() => navigate('/')} className="block cursor-pointer select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#151821] hover:text-white focus:bg-[#151821] focus:text-white">
+                             <button onClick={() => navigate('/')} className="block cursor-pointer select-none space-y-1 rounded-md p-3 text-left w-full leading-none no-underline outline-none transition-colors hover:bg-[#151821] hover:text-white focus:bg-[#151821] focus:text-white">
                                <div className="flex items-center gap-2 text-[#FFFFFF]">
                                  <InfoIcon size={16} className="text-[#A1A1AA]" />
                                  <div className="text-sm font-medium leading-none">About Us</div>
@@ -186,7 +184,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuToggle }) => {
                                <p className="line-clamp-2 text-sm leading-snug text-[#A1A1AA] pt-1.5">
                                  Read about the Pulse platform origin and our dedicated team.
                                </p>
-                             </a>
+                             </button>
                            </NavigationMenuLink>
                          </li>
                       </ul>
@@ -238,10 +236,10 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuToggle }) => {
           ) : (
              <>
                <Button asChild variant="ghost" className="text-sm text-[#A1A1AA] hover:text-[#FFFFFF] hidden sm:inline-flex px-0 hover:bg-transparent cursor-pointer">
-                 <a onClick={() => navigate('/login')}>Sign In</a>
+                 <button onClick={() => navigate('/login')}>Sign In</button>
                </Button>
                <Button asChild className="text-sm bg-[#7C5CFF] text-[#FFFFFF] hover:bg-[#6D4EFF] hidden sm:inline-flex cursor-pointer transition-colors shadow-sm">
-                 <a onClick={() => navigate('/register')}>Get Started</a>
+                 <button onClick={() => navigate('/register')}>Get Started</button>
                </Button>
              </>
           )}
