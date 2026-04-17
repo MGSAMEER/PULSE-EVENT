@@ -5,21 +5,27 @@ if (!rawApiUrl.startsWith('http://') && !rawApiUrl.startsWith('https://')) {
   rawApiUrl = `https://${rawApiUrl}`;
 }
 
-let API_BASE_URL = 'http://localhost:5001/api';
+let origin = 'http://localhost:5001';
 try {
-  const parsedUrl = new URL(rawApiUrl);
-  API_BASE_URL = `${parsedUrl.protocol}//${parsedUrl.host}/api`;
+  origin = new URL(rawApiUrl).origin;
 } catch (e) {
-  console.warn('Invalid API URL format, falling back to localhost.');
+  console.warn('Invalid API URL format, using default origin.');
 }
 
 const api = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: 10000, // 10 second timeout
+  baseURL: origin,
+  timeout: 15000, // Slightly longer timeout for production stability
 });
 
-// Add token to requests
+// Request Interceptor: Handles prefixing and tokens
 api.interceptors.request.use((config) => {
+  // 1. Ensure /api prefix for all relative requests
+  if (config.url && !config.url.startsWith('http') && !config.url.startsWith('/api')) {
+    const separator = config.url.startsWith('/') ? '' : '/';
+    config.url = `/api${separator}${config.url}`;
+  }
+
+  // 2. Add Authorization token
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
