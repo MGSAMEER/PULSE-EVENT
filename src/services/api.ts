@@ -4,7 +4,14 @@ let rawApiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 if (!rawApiUrl.startsWith('http://') && !rawApiUrl.startsWith('https://')) {
   rawApiUrl = `https://${rawApiUrl}`;
 }
-const API_BASE_URL = rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl.replace(/\/$/, '')}/api`;
+
+let API_BASE_URL = 'http://localhost:5001/api';
+try {
+  const parsedUrl = new URL(rawApiUrl);
+  API_BASE_URL = `${parsedUrl.protocol}//${parsedUrl.host}/api`;
+} catch (e) {
+  console.warn('Invalid API URL format, falling back to localhost.');
+}
 
 const api = axios.create({
   baseURL: API_BASE_URL,
