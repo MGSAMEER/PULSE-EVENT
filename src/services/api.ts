@@ -14,7 +14,7 @@ try {
 
 const api = axios.create({
   baseURL: origin,
-  timeout: 15000, // Slightly longer timeout for production stability
+  timeout: 30000, 
 });
 
 // Request Interceptor: Handles prefixing and tokens
