@@ -1,19 +1,21 @@
 import axios from 'axios';
 
-let rawApiUrl = process.env.REACT_APP_API_URL || 'https://pulse-events.onrender.com/api';
-if (!rawApiUrl.startsWith('http://') && !rawApiUrl.startsWith('https://')) {
-  rawApiUrl = `https://${rawApiUrl}`;
+// Get API URL from environment or default to Render backend
+const apiUrl = process.env.REACT_APP_API_URL || 'https://pulse-events.onrender.com/api';
+
+// Ensure proper protocol
+let baseURL = apiUrl;
+if (!baseURL.startsWith('http://') && !baseURL.startsWith('https://')) {
+  baseURL = `https://${baseURL}`;
 }
 
-let origin = 'https://pulse-events.onrender.com';
-try {
-  origin = new URL(rawApiUrl).origin;
-} catch (e) {
-  console.warn('Invalid API URL format, using default origin.');
+// Remove trailing /api if present - we'll add it in the interceptor
+if (baseURL.endsWith('/api')) {
+  baseURL = baseURL.slice(0, -4);
 }
 
 const api = axios.create({
-  baseURL: origin,
+  baseURL: baseURL, // e.g., https://pulse-events.onrender.com
   timeout: 30000, 
 });
 
