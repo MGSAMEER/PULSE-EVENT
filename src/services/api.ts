@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-let rawApiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+let rawApiUrl = process.env.REACT_APP_API_URL || 'https://pulse-events.onrender.com/api';
 if (!rawApiUrl.startsWith('http://') && !rawApiUrl.startsWith('https://')) {
   rawApiUrl = `https://${rawApiUrl}`;
 }
 
-let origin = 'http://localhost:5001';
+let origin = 'https://pulse-events.onrender.com';
 try {
   origin = new URL(rawApiUrl).origin;
 } catch (e) {
@@ -38,7 +38,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.message === 'Network Error' && !error.response) {
-      console.error('Network error: Backend may not be running. Make sure the server is running on http://localhost:5001');
+      console.error('Network error: Backend may not be running. Make sure the server is running and REACT_APP_API_URL is configured (https://pulse-events.onrender.com)');
     }
     return Promise.reject(error);
   }
