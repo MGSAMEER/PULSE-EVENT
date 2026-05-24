@@ -23,13 +23,15 @@ const PaymentSuccess = lazy(() => import('./components/PaymentSuccess'));
 const VerifyEmail = lazy(() => import('./components/VerifyEmail'));
 const ForgotPassword = lazy(() => import('./components/ForgotPassword'));
 const ResetPassword = lazy(() => import('./components/ResetPassword'));
-const BecomeOrganizer = lazy(() => import('./components/BecomeOrganizer'));
+  const BecomeOrganizer = lazy(() => import('./components/BecomeOrganizer'));
+  const Profile = lazy(() => import('./components/Profile'));
+  const TicketDetail = lazy(() => import('./components/TicketDetail'));
 
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
 
 // Minimal loading spinner for lazy-loaded routes
 const PageLoader = () => (
-  <div className="min-h-screen bg-[#0B0B0F] flex items-center justify-center">
+  <div className="min-h-screen bg-white dark:bg-[#0B0B0F] flex items-center justify-center">
     <div className="w-8 h-8 border-2 border-[#7C5CFF]/30 border-t-[#7C5CFF] rounded-full animate-spin" />
   </div>
 );
@@ -93,6 +95,8 @@ function App() {
                 <Route path="/payment/:bookingId" element={<UserRoute><Layout><Payment /></Layout></UserRoute>} />
                 <Route path="/success" element={<UserRoute><Layout><PaymentSuccess /></Layout></UserRoute>} />
                 <Route path="/become-organizer" element={<UserRoute><Layout><BecomeOrganizer /></Layout></UserRoute>} />
+                <Route path="/profile" element={<UserRoute><Layout><Profile /></Layout></UserRoute>} />
+                <Route path="/ticket/:id" element={<UserRoute><Layout><TicketDetail /></Layout></UserRoute>} />
                 
                 <Route path="/scanner" element={<StaffRoute><Layout><QRScanner /></Layout></StaffRoute>} />
                 <Route path="/admin" element={<AdminRoute><Layout><AdminDashboard /></Layout></AdminRoute>} />

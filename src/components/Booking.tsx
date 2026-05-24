@@ -62,8 +62,8 @@ const Booking: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0B0F] pt-24 pb-32">
-      <div className="max-w-[1000px] mx-auto px-6">
+    <div className="space-y-8 pt-2 pb-8 bg-[var(--bg-main)]">
+      <div className="app-container">
         
         {/* Navigation */}
         <button 
@@ -84,7 +84,7 @@ const Booking: React.FC = () => {
           <div className="md:col-span-7 space-y-6">
             
             <div className="clean-card p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start md:items-center">
-               <div className="w-full md:w-32 h-32 rounded-xl bg-[#0B0B0F] border border-[#26272B] overflow-hidden shrink-0">
+                <div className="w-full md:w-32 h-32 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] overflow-hidden shrink-0">
                   {event.flyerImage ? (
                      <img src={event.flyerImage} alt={event.name} className="w-full h-full object-cover" />
                   ) : (
@@ -120,7 +120,7 @@ const Booking: React.FC = () => {
                      <span className="text-sm text-[#A1A1AA]">₹{unitPrice.toLocaleString()} each</span>
                   </div>
                   
-                  <div className="flex items-center bg-[#111217] border border-[#26272B] rounded-lg overflow-hidden">
+                   <div className="flex items-center bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-lg overflow-hidden">
                      <button 
                         onClick={() => setTicketsCount(Math.max(1, ticketsCount - 1))}
                         className="w-10 h-10 flex items-center justify-center text-[#A1A1AA] hover:text-[#FFFFFF] hover:bg-[#26272B] transition-colors border-none"
@@ -145,7 +145,7 @@ const Booking: React.FC = () => {
 
           {/* Right Column: Order Summary */}
           <div className="md:col-span-5">
-             <div className="clean-card p-6 md:p-8 sticky top-28 bg-[#151821]">
+              <div className="premium-card p-6 sticky top-20">
                 <h3 className="text-[18px] font-semibold text-[#FFFFFF] mb-6">Order Summary</h3>
                 
                 <div className="space-y-4 mb-6">
@@ -190,12 +190,11 @@ const Booking: React.FC = () => {
                    <span className="text-[12px] font-medium">Secured by Pulse Global</span>
                 </div>
              </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  );
-};
+            </div>
+           </div>
+         </div>
+       </div>
+     );
+   };
 
 export default Booking;

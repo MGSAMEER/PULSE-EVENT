@@ -466,41 +466,18 @@ const AdminDashboard: React.FC = () => {
           {activeTab === 'staff' && <StaffManagement />}
           {activeTab === 'sponsors' && <SponsorManagement />}
           {activeTab === 'overview' && (
-            <div className="space-y-16 animate-slide-up">
-              <AreaChart1 analytics={analytics} />
+            <div className="space-y-8 animate-slide-up">
+               <AreaChart1 analytics={analytics} />
 
-              {/* Quick Actions & Search Bar */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
-                <div className="lg:col-span-5 space-y-4">
-                  <label className="label-technical ml-1">Live Intelligence Search</label>
-                  <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                      <Users className="w-4 h-4 text-white/20 group-focus-within:text-primary transition-colors" />
-                    </div>
-                    <input 
-                      type="text" 
-                      placeholder="SCAN TRANSACTIONS..." 
-                      className="bms-input pl-12 h-14 bg-white/[0.03] border-white/5 hover:border-white/10"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                  </div>
+               <div className="space-y-6">
+                <div className="relative">
+                  <input type="text" placeholder="Search transactions, users, events..." className="input-field h-12 pl-11" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                  <Users className="absolute left-4 top-3.5 w-4 h-4 text-[var(--text-dim)]" />
                 </div>
-
-                <div className="lg:col-span-7 flex flex-wrap items-center justify-end gap-3 pb-1">
-                  <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest mr-2">Frequencies:</span>
-                  <button onClick={handleOpenCreateModal} className="flex items-center gap-3 glass hover:bg-white/10 px-5 py-3 rounded-xl border-white/5 text-[10px] font-bold uppercase tracking-widest group transition-all">
-                    <PlusCircle size={14} className="text-primary group-hover:scale-110 transition-transform" /> 
-                    Create Event
-                  </button>
-                  <button onClick={() => setActiveTab('requests')} className="flex items-center gap-3 glass hover:bg-white/10 px-5 py-3 rounded-xl border-white/5 text-[10px] font-bold uppercase tracking-widest group transition-all">
-                    <Activity size={14} className="text-orange-500 group-hover:scale-110 transition-transform" /> 
-                    Clearance
-                  </button>
-                  <button onClick={() => setActiveTab('sponsors')} className="flex items-center gap-3 glass hover:bg-white/10 px-5 py-3 rounded-xl border-white/5 text-[10px] font-bold uppercase tracking-widest group transition-all">
-                    <Tag size={14} className="text-emerald-500 group-hover:scale-110 transition-transform" /> 
-                    Sponsors
-                  </button>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <button onClick={handleOpenCreateModal} className="thumb-button flex items-center justify-center gap-2 bg-[var(--primary)] text-white rounded-2xl py-3 text-sm font-semibold active:scale-[0.985]">Create Event</button>
+                  <button onClick={() => setActiveTab('requests')} className="thumb-button flex items-center justify-center gap-2 bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-2xl py-3 text-sm font-semibold">Organizer Requests</button>
+                  <button onClick={() => setActiveTab('sponsors')} className="thumb-button col-span-2 sm:col-span-1 flex items-center justify-center gap-2 bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-2xl py-3 text-sm font-semibold">Manage Sponsors</button>
                 </div>
               </div>
 

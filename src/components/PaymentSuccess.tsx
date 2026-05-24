@@ -13,21 +13,28 @@ const PaymentSuccess: React.FC = () => {
     }
   }, [bookingData, navigate]);
 
+  useEffect(() => {
+    if (bookingData) {
+      const t = setTimeout(() => navigate('/bookings'), 4200);
+      return () => clearTimeout(t);
+    }
+  }, [bookingData, navigate]);
+
   if (!bookingData) return null;
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4">
-      <div className="max-w-xl w-full text-center">
+    <div className="pb-24 flex items-center justify-center px-4 py-8 bg-[var(--bg-main)]">
+      <div className="max-w-md w-full text-center space-y-6">
         {/* Animated Celebration Icon */}
         <div className="relative mb-10 inline-block">
            <div className="absolute inset-0 bg-[var(--primary)] blur-[80px] opacity-20 scale-150 animate-pulse"></div>
-           <div className="relative bg-white w-24 h-24 rounded-full flex items-center justify-center shadow-2xl border border-gray-50 animate-bounce-short">
-              <CheckCircle className="w-12 h-12 text-[var(--primary)]" />
-           </div>
+            <div className="relative bg-[var(--bg-card)] w-24 h-24 rounded-full flex items-center justify-center shadow-2xl border border-white/10 animate-bounce-short">
+               <CheckCircle className="w-12 h-12 text-[var(--primary)]" />
+            </div>
         </div>
 
-        <h1 className="text-5xl font-black text-gray-900 tracking-tighter mb-4">
-           BOOKING <span className="text-[var(--primary)]">CONFIRMED.</span>
+        <h1 className="text-4xl font-semibold tracking-tight text-white mb-2">
+           Booking Confirmed
         </h1>
         <p className="text-gray-400 font-black text-[10px] uppercase tracking-[0.4em] mb-12">
            Payment Completed Successfully
@@ -58,7 +65,7 @@ const PaymentSuccess: React.FC = () => {
                  </div>
               </div>
 
-              <div className="pt-6 border-t border-gray-100 flex items-center justify-between">
+              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-sm">
                  <div>
                     <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 mb-1">Confirmed Slots</p>
                     <p className="text-lg font-black text-gray-900">{bookingData.ticketsCount} Tickets</p>
@@ -71,21 +78,13 @@ const PaymentSuccess: React.FC = () => {
            </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-           <button 
-             onClick={() => navigate('/bookings')}
-             className="bms-btn bg-gray-900 flex items-center justify-center gap-3 px-10 py-5 shadow-xl transition-all"
-           >
-              <Ticket className="w-5 h-5" /> VIEW MY BOOKINGS
-           </button>
-           <button 
-             onClick={() => navigate('/')}
-             className="bms-btn bg-white border border-gray-200 text-gray-900 flex items-center justify-center gap-3 px-10 py-5 hover:bg-gray-50 transition-all"
-           >
-             RETURN HOME <ArrowRight className="w-5 h-5" />
-           </button>
-        </div>
+         {/* Action Buttons */}
+         <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button onClick={() => navigate('/bookings')} className="thumb-button flex-1 h-12 rounded-2xl bg-[var(--primary)] text-white text-sm font-semibold flex items-center justify-center gap-2 active:scale-95">View My Tickets</button>
+            <button onClick={() => navigate('/discover')} className="thumb-button flex-1 h-12 rounded-2xl bg-white/10 border border-white/20 text-sm font-semibold flex items-center justify-center gap-2 active:scale-95">Explore More Events</button>
+         </div>
+
+         <div className="text-xs text-[var(--text-muted)]">You will be redirected to your tickets shortly...</div>
 
         {/* Support Note */}
         <p className="mt-12 text-[10px] font-bold text-gray-400 uppercase tracking-widest px-10">

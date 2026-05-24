@@ -18,50 +18,36 @@ const MetricCard: React.FC<MetricProps> = ({ title, value, period = 'Last 28 day
   const gradientId = `gradient-${title.replace(/\s+/g, '-').toLowerCase()}`;
   
   return (
-    <Card className="glass border-white/5 overflow-hidden group">
-      <CardContent className="space-y-6 p-8">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Icon className="w-5 h-5 text-primary" />
-             </div>
-             <span className="label-technical !text-white text-sm">{title}</span>
+    <div className="stat-card group">
+      <div className="flex items-start justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded-2xl bg-[var(--primary)]/10 flex items-center justify-center">
+            <Icon className="w-5 h-5 text-[var(--primary)]" />
           </div>
-          <div className="flex items-center gap-1 opacity-40 group-hover:opacity-100 transition-opacity">
-             <Zap size={10} className="text-primary" />
-             <span className="text-[8px] font-bold uppercase tracking-widest">Real-time</span>
+          <div>
+            <div className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--text-muted)]">{title}</div>
+            <div className="text-[9px] text-[var(--text-dim)] mt-0.5">{period}</div>
           </div>
         </div>
-
-        <div className="flex items-end justify-between gap-4">
-          <div className="space-y-1">
-            <p className="text-[10px] font-bold text-[#8E8E93] uppercase tracking-widest">{period}</p>
-            <div className="text-4xl font-semibold text-white tracking-tighter tabular-nums">{value}</div>
-          </div>
-
-          <div className="w-32 h-16 relative">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={data}>
-                <defs>
-                  <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#E5C07B" stopOpacity={0.3} />
-                    <stop offset="100%" stopColor="#E5C07B" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <Area
-                  type="monotone"
-                  dataKey="value"
-                  stroke="#E5C07B"
-                  fill={`url(#${gradientId})`}
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
+        <div className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-white/50 group-hover:text-[var(--primary)]">LIVE</div>
+      </div>
+      <div className="flex items-end justify-between">
+        <div className="text-4xl font-semibold tracking-[-2.2px] text-white tabular-nums">{value}</div>
+        <div className="w-28 h-14 -mb-1 -mr-1 opacity-70">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={data}>
+              <defs>
+                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#7C5CFF" stopOpacity={0.6} />
+                  <stop offset="100%" stopColor="#7C5CFF" stopOpacity={0.05} />
+                </linearGradient>
+              </defs>
+              <Area type="monotone" dataKey="value" stroke="#7C5CFF" fill={`url(#${gradientId})`} strokeWidth={2.5} dot={false} />
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

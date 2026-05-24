@@ -38,16 +38,16 @@ const EventDetails: React.FC = () => {
   }, [eventId]);
 
   if (loading) return (
-    <div className="min-h-screen bg-[#0B0B0F] flex flex-col items-center justify-center p-6">
-       <Loader2 className="animate-spin text-[#7C5CFF] w-12 h-12 mb-4" />
-       <p className="text-[#A1A1AA] font-medium">Loading event details...</p>
+    <div className="min-h-screen bg-[var(--bg-main)] flex flex-col items-center justify-center p-6">
+       <Loader2 className="animate-spin text-[var(--primary)] w-12 h-12 mb-4" />
+       <p className="text-[var(--text-muted)] font-medium">Loading event details...</p>
     </div>
   );
 
   if (!event) return (
-    <div className="min-h-[70vh] bg-[#0B0B0F] flex flex-col items-center justify-center p-6 text-center">
-       <div className="w-16 h-16 bg-[#151821] border border-[#26272B] rounded-full flex items-center justify-center mb-6">
-          <Calendar className="text-[#A1A1AA] w-8 h-8" />
+    <div className="min-h-[70vh] bg-[var(--bg-main)] flex flex-col items-center justify-center p-6 text-center">
+       <div className="w-16 h-16 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-full flex items-center justify-center mb-6">
+          <Calendar className="text-[var(--text-muted)] w-8 h-8" />
        </div>
        <h2 className="text-h2 mb-4">Event not found</h2>
        <p className="text-body mb-8">This event may have been removed or doesn't exist.</p>
@@ -58,8 +58,8 @@ const EventDetails: React.FC = () => {
   const displayPrice = event?.earlyBirdPrice || event?.price || 0;
 
   return (
-    <div className="min-h-screen bg-[#0B0B0F] pt-24 pb-32">
-      <div className="max-w-[1200px] mx-auto px-6">
+    <div className="space-y-8 pt-4">
+      <div className="app-container">
         
         {/* Back Link */}
         <button 
@@ -75,7 +75,7 @@ const EventDetails: React.FC = () => {
           <div className="lg:col-span-8 space-y-10">
             
             {/* Hero Image in Left Col */}
-            <div className="w-full aspect-video rounded-2xl overflow-hidden bg-[#151821] border border-[#26272B]">
+             <div className="w-full aspect-video rounded-2xl overflow-hidden bg-[var(--bg-card)] border border-[var(--border-color)]">
                {event.flyerImage ? (
                   <img src={event.flyerImage} alt={event.name} className="w-full h-full object-cover" />
                ) : (
@@ -149,45 +149,27 @@ const EventDetails: React.FC = () => {
 
           </div>
 
-          {/* Right Column: Checkout Card (30%) */}
-          <div className="lg:col-span-4">
-             <div className="clean-card p-6 sticky top-28 bg-[#151821]">
-                <div className="text-left pb-6 border-b border-[#26272B]">
-                   <p className="text-sm text-[#A1A1AA] mb-1">Price starts at</p>
-                   <h3 className="text-[32px] font-semibold text-[#FFFFFF]">₹{displayPrice.toLocaleString()}</h3>
-                   {event.earlyBirdPrice && (
-                      <p className="text-sm text-[#A1A1AA] mt-1">
-                         <span className="line-through mr-2">₹{event.price.toLocaleString()}</span>
-                         <span className="text-[#7C5CFF] font-medium">Early Bird Discount</span>
-                      </p>
-                   )}
-                </div>
+           <div className="lg:col-span-4">
+              <div className="premium-card p-6 lg:sticky lg:top-20">
+                 <div className="pb-5 border-b border-[var(--border-color)]">
+                    <div className="text-xs uppercase tracking-widest text-[var(--text-muted)]">Starting at</div>
+                    <div className="text-4xl font-semibold tracking-tighter mt-1 text-white">₹{displayPrice.toLocaleString()}</div>
+                    {event.earlyBirdPrice && <div className="text-xs text-[#7C5CFF] mt-1">Early bird • save ₹{(event.price - event.earlyBirdPrice).toLocaleString()}</div>}
+                 </div>
 
-                <div className="py-6 space-y-4">
-                   <div className="flex justify-between text-sm">
-                      <span className="text-[#A1A1AA]">Available Seats</span>
-                      <span className="font-semibold text-[#FFFFFF]">{event.availableTickets}</span>
-                   </div>
-                   <div className="flex justify-between text-sm">
-                      <span className="text-[#A1A1AA]">Sales End</span>
-                      <span className="font-semibold text-[#FFFFFF]">Before event</span>
-                   </div>
-                </div>
+                 <div className="py-5 grid grid-cols-2 gap-y-3 text-sm">
+                    <div className="text-[var(--text-muted)]">Seats left</div><div className="font-medium text-right">{event.availableTickets}</div>
+                    <div className="text-[var(--text-muted)]">Sales close</div><div className="font-medium text-right">On event day</div>
+                 </div>
 
-                <button 
-                  onClick={() => navigate(`/book/${event._id}`)}
-                  className="w-full btn-primary h-[48px] text-base"
-                >
-                   <Ticket size={18} />
-                   Reserve Tickets
-                </button>
-             </div>
-             
-             {/* Small Sponsors section under booking if needed */}
-             <div className="mt-8">
-                <SponsorShowcase sponsors={sponsors} isHero={true} />
-             </div>
-          </div>
+                 <button onClick={() => navigate(`/book/${event._id}`)} className="thumb-button w-full bg-[var(--primary)] text-white h-12 rounded-2xl flex items-center justify-center gap-2 font-semibold active:scale-[0.985]">
+                   <Ticket className="w-4 h-4" /> Reserve Tickets
+                 </button>
+              </div>
+              <div className="mt-6">
+                 <SponsorShowcase sponsors={sponsors} isHero={true} />
+              </div>
+           </div>
           
         </div>
       </div>

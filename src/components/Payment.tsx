@@ -171,73 +171,61 @@ const Payment: React.FC = () => {
   }
 
   return (
-    <div className="max-w-xl mx-auto px-4 py-12 animate-fade-in">
-       {/* Breadcrumbs */}
-       <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-gray-400 hover:text-gray-900 mb-10 text-[10px] font-black uppercase tracking-widest">
-          <ArrowLeft className="w-4 h-4" /> Back to Booking
-       </button>
+    <div className="max-w-xl mx-auto px-4 py-8 pb-24 md:pb-8 animate-fade-in space-y-6">
+      <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-main)] mb-2 text-xs font-semibold uppercase tracking-widest">
+        <ArrowLeft className="w-4 h-4" /> Back to Booking
+      </button>
 
-       <div className="bms-card p-0 overflow-hidden bg-white border-none shadow-2xl relative">
-          {/* Header */}
-          <div className="bg-gray-900 p-10 text-white">
-             <div className="flex justify-between items-start">
-                <div>
-                   <p className="text-[10px] font-black text-[var(--primary)] uppercase tracking-widest mb-1">Secure Checkout</p>
-                   <h2 className="text-3xl font-black tracking-tighter uppercase">CONFIRM PAYMENT</h2>
-                </div>
-                <div className="bg-white/10 p-3 rounded-2xl backdrop-blur-md">
-                   <Lock className="w-6 h-6 text-white" />
-                </div>
-             </div>
+      <div className="bg-[var(--bg-card)] rounded-3xl border border-[var(--border-color)] overflow-hidden">
+        <div className="px-6 pt-6 pb-4 border-b border-white/10">
+          <div className="flex justify-between items-start">
+            <div>
+              <div className="text-[10px] font-bold tracking-[2px] text-[var(--primary)]">SECURE CHECKOUT</div>
+              <div className="text-2xl font-semibold tracking-tight mt-1">Confirm Payment</div>
+            </div>
+            <div className="bg-white/5 p-3 rounded-2xl">
+              <Lock className="w-5 h-5 text-[var(--primary)]" />
+            </div>
+          </div>
+        </div>
+
+        <div className="p-6 space-y-6">
+          <div className="space-y-4">
+            <div className="uppercase text-[10px] tracking-[2px] text-[var(--text-muted)]">Order Summary</div>
+
+                <div className="bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-2xl p-5 space-y-3 text-sm">
+              <div className="flex justify-between">
+                <span className="text-[var(--text-muted)]">Event</span>
+                <span className="font-medium text-right">{booking.eventId.name}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[var(--text-muted)]">Tickets</span>
+                <span>{booking.ticketsCount} ×</span>
+              </div>
+              <div className="pt-3 border-t border-white/10 flex justify-between items-baseline">
+                <span className="text-xs uppercase tracking-widest text-[var(--text-muted)]">Total Due</span>
+                <span className="text-3xl font-semibold tabular-nums">₹{booking.totalPrice.toLocaleString()}</span>
+              </div>
+            </div>
           </div>
 
-          <div className="p-10 space-y-10">
-             {/* Order Details */}
-             <div className="space-y-6">
-                <div className="flex items-center gap-4 text-gray-400">
-                   <Zap className="w-5 h-5" />
-                   <p className="text-[11px] font-black uppercase tracking-widest">Confirmation Summary</p>
-                </div>
-                
-                <div className="bg-gray-50 p-8 rounded-[2rem] border border-gray-100 space-y-4">
-                   <div className="flex justify-between items-center">
-                      <span className="text-[10px] font-black text-gray-400 uppercase">Event</span>
-                      <span className="text-sm font-black text-gray-900 uppercase">{booking.eventId.name}</span>
-                   </div>
-                   <div className="flex justify-between items-center">
-                      <span className="text-[10px] font-black text-gray-400 uppercase">Tickets</span>
-                      <span className="text-sm font-black text-gray-900">{booking.ticketsCount} Ticket(s)</span>
-                   </div>
-                   <div className="pt-4 border-t border-gray-200 flex justify-between items-center">
-                      <span className="text-xs font-black text-gray-900 uppercase tracking-widest">Total</span>
-                      <span className="text-3xl font-black text-[var(--primary)]">₹{booking.totalPrice.toLocaleString()}</span>
-                   </div>
-                </div>
-             </div>
-
-             {/* Verification Banner */}
-             <div className="flex gap-4 p-6 bg-indigo-50/50 rounded-2xl border border-indigo-50 items-center">
-                <ShieldCheck className="w-6 h-6 text-indigo-600" />
-                <p className="text-[10px] text-indigo-700 font-bold uppercase tracking-wider leading-relaxed">
-                   Transaction secured by Razorpay with industry-standard encryption.
-                </p>
-             </div>
-
-             {/* Action */}
-             <button
-               onClick={handlePayment}
-               disabled={loading}
-               className="w-full bms-btn py-6 text-lg font-black flex items-center justify-center gap-4 shadow-2xl shadow-red-100"
-             >
-                {loading ? <Activity className="animate-spin w-6 h-6" /> : <CreditCard className="w-6 h-6" />}
-                {loading ? 'PROCESSING...' : `PAY NOW (₹${booking.totalPrice})`}
-             </button>
-             
-             <p className="text-center text-[9px] font-bold text-gray-400 uppercase tracking-widest">
-                By clicking, you agree to be charged the amount shown above.
-             </p>
+          <div className="flex gap-3 p-4 bg-[var(--bg-surface)] rounded-2xl border border-[var(--border-color)] text-xs text-[var(--text-muted)]">
+            <ShieldCheck className="w-4 h-4 mt-0.5 shrink-0 text-[var(--primary)]" />
+            <span>Payments processed securely by Razorpay. Your data is encrypted end-to-end.</span>
           </div>
-       </div>
+
+          <button
+            onClick={handlePayment}
+            disabled={loading}
+            className="thumb-button w-full h-14 rounded-2xl bg-[var(--primary)] text-white text-base font-semibold flex items-center justify-center gap-3 active:scale-95 disabled:opacity-70"
+          >
+            {loading ? <Activity className="animate-spin w-5 h-5" /> : <CreditCard className="w-5 h-5" />}
+            {loading ? 'PROCESSING PAYMENT...' : `PAY ₹${booking.totalPrice.toLocaleString()} NOW`}
+          </button>
+
+          <p className="text-center text-[10px] text-[var(--text-dim)]">By proceeding you agree to the charge shown above.</p>
+        </div>
+      </div>
     </div>
   );
 };

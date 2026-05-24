@@ -10,6 +10,8 @@ import {
   Menu, 
   X,
   Home,
+  Search,
+  User,
   Sun,
   Moon
 } from 'lucide-react';
@@ -66,110 +68,89 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       ? [...commonNav, ...organizerTools]
       : commonNav;
 
+  const bottomNavItems = (user?.role === 'ADMIN' || user?.role === 'ORGANIZER')
+    ? [
+        { name: 'Home', href: '/admin', icon: Home },
+        { name: 'Explore', href: '/admin', icon: Search },
+        { name: 'Tickets', href: '/bookings', icon: Ticket },
+        { name: 'Profile', href: '/admin', icon: User },
+      ]
+    : [
+        { name: 'Home', href: '/discover', icon: Home },
+        { name: 'Explore', href: '/discover', icon: Search },
+        { name: 'Tickets', href: '/bookings', icon: Ticket },
+        { name: 'Profile', href: '/profile', icon: User },
+      ];
+
   return (
-    <div className="min-h-screen transition-colors duration-500">
-      {/* Header */}
-      <header className="bg-[var(--bg-surface)] border-b border-[var(--border-color)] sticky top-0 z-50 shadow-sm transition-colors duration-500">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="bg-[var(--primary)] p-2 rounded-xl group-hover:rotate-6 transition-transform shadow-lg shadow-red-500/20">
-                 <Ticket className="w-6 h-6 text-white" />
+    <div className="min-h-screen transition-colors duration-500 bg-[var(--bg-main)]">
+      <header className="bg-[var(--bg-surface)]/95 border-b border-[var(--border-color)] backdrop-blur-lg sticky top-0 z-50 transition-colors duration-500">
+        <div className="app-container">
+          <div className="flex justify-between items-center h-16">
+            <Link to="/discover" className="flex items-center gap-2.5 group">
+              <div className="bg-[var(--primary)] p-2 rounded-2xl group-hover:scale-105 transition-transform">
+                <Ticket className="w-5 h-5 text-white" />
               </div>
-              <span className="text-2xl font-black text-[var(--text-main)] tracking-tighter uppercase">PULSE</span>
+              <span className="text-xl font-bold tracking-[-0.03em] text-[var(--text-main)]">PULSE</span>
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-10">
+            <nav className="hidden lg:flex items-center gap-8 text-sm">
               {currentNav.map((item) => {
-                const isActive = location.pathname === item.href;
+                const isActive = location.pathname === item.href || (item.href === '/discover' && location.pathname === '/');
                 return (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={`flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.2em] transition-all ${
-                      isActive ? 'text-[var(--primary)]' : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
-                    }`}
+                    className={`flex items-center gap-1.5 transition-colors ${isActive ? 'text-[var(--primary)] font-semibold' : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'}`}
                   >
-                    <item.icon className={`w-4 h-4 ${isActive ? 'animate-pulse' : ''}`} />
+                    <item.icon className="w-4 h-4" />
                     {item.name}
                   </Link>
                 );
               })}
             </nav>
 
-            {/* Actions */}
-            <div className="flex items-center gap-6">
-              {/* Theme Toggle Button */}
-              <button
-                onClick={toggleTheme}
-                className="p-3 bg-[var(--bg-main)] text-[var(--text-muted)] rounded-2xl hover:text-[var(--text-main)] transition-all border border-[var(--border-color)] shadow-sm"
-                aria-label="Toggle Theme"
-              >
+            <div className="flex items-center gap-2">
+              <button onClick={toggleTheme} className="p-2.5 rounded-2xl bg-[var(--bg-main)] border border-[var(--border-color)] text-[var(--text-muted)] hover:text-[var(--text-main)]" aria-label="Toggle theme">
                 {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
               </button>
 
               <div className="relative" ref={dropdownRef}>
-                <button 
-                  onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                  className="flex items-center gap-3 bg-[var(--bg-surface)] hover:bg-[var(--bg-main)] p-1 pl-4 rounded-full transition-all border border-[var(--border-color)]"
-                >
-                  <div className="text-right hidden md:block">
-                    <p className="text-[10px] font-black text-[var(--text-main)] leading-none">{user?.name?.split(' ')[0]}</p>
-                    <p className="text-[8px] font-bold text-[var(--text-muted)] uppercase tracking-widest mt-0.5">{user?.role}</p>
-                  </div>
-                  <div className="w-9 h-9 bg-[var(--primary)] rounded-full flex items-center justify-center text-white font-black text-sm shadow-lg shadow-red-500/10">
-                    {user?.name?.charAt(0).toUpperCase()}
+                <button onClick={() => setProfileDropdownOpen(!profileDropdownOpen)} className="flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-3xl bg-[var(--bg-main)] border border-[var(--border-color)] hover:bg-[var(--bg-surface)]">
+                  <div className="w-8 h-8 rounded-2xl bg-[var(--primary)] flex items-center justify-center text-white text-sm font-bold">{user?.name?.charAt(0).toUpperCase()}</div>
+                  <div className="hidden md:block text-left leading-none pr-1">
+                    <div className="text-xs font-semibold text-[var(--text-main)]">{user?.name?.split(' ')[0]}</div>
                   </div>
                 </button>
-
                 {profileDropdownOpen && (
-                  <div className="absolute right-0 mt-4 w-60 bg-[var(--bg-surface)] rounded-[1.5rem] shadow-2xl py-4 z-50 border border-[var(--border-color)] animate-scale-up">
-                    <div className="px-6 py-4 border-b border-[var(--border-color)] mb-3 opacity-90">
-                       <p className="text-xs font-black text-[var(--text-main)]">{user?.name}</p>
-                       <p className="text-[10px] font-bold text-[var(--text-muted)] mt-1">{user?.email}</p>
+                  <div className="absolute right-0 mt-3 w-64 bg-[var(--bg-surface)] rounded-3xl border border-[var(--border-color)] shadow-2xl py-2 z-[70]">
+                    <div className="px-5 py-3 border-b border-[var(--border-color)]">
+                      <div className="font-semibold text-[var(--text-main)]">{user?.name}</div>
+                      <div className="text-xs text-[var(--text-muted)] mt-0.5 truncate">{user?.email}</div>
                     </div>
-                    <button 
-                      onClick={() => {navigate('/bookings'); setProfileDropdownOpen(false);}}
-                      className="flex items-center gap-3 w-full px-6 py-3 text-sm text-[var(--text-main)] font-bold hover:bg-[var(--bg-main)] transition-colors"
-                    >
-                       <Ticket className="w-4 h-4" /> My Bookings
+                    <button onClick={() => { navigate('/bookings'); setProfileDropdownOpen(false); }} className="w-full flex items-center gap-3 px-5 py-3 text-sm hover:bg-[var(--bg-main)] text-[var(--text-main)]">
+                      <Ticket className="w-4 h-4" /> My Tickets
                     </button>
-                    <button 
-                      onClick={handleLogout}
-                      className="flex items-center gap-3 w-full px-6 py-4 text-sm text-[var(--primary)] font-black hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors mt-2"
-                    >
-                       <LogOut className="w-4 h-4" /> Sign Out
+                    <button onClick={handleLogout} className="w-full flex items-center gap-3 px-5 py-3 text-sm text-[var(--primary)] hover:bg-[var(--bg-main)]">
+                      <LogOut className="w-4 h-4" /> Sign Out
                     </button>
                   </div>
                 )}
               </div>
 
-              {/* Mobile Menu */}
-              <button 
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 text-[var(--text-main)] hover:bg-[var(--bg-main)] rounded-xl"
-              >
-                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="lg:hidden p-2.5 text-[var(--text-main)]">
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-[var(--bg-surface)] border-t border-[var(--border-color)] animate-slide-down">
-            <div className="px-6 py-8 space-y-4">
+          <div className="lg:hidden border-t border-[var(--border-color)] bg-[var(--bg-surface)]">
+            <div className="app-container py-4 flex flex-col gap-1">
               {currentNav.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="flex items-center gap-5 px-6 py-5 text-sm font-black text-[var(--text-main)] uppercase tracking-[0.2em] bg-[var(--bg-main)] rounded-2xl border border-[var(--border-color)]"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <item.icon className="w-5 h-5 text-[var(--primary)]" />
-                  {item.name}
+                <Link key={item.name} to={item.href} onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 rounded-2xl text-[var(--text-main)] hover:bg-[var(--bg-main)]">
+                  <item.icon className="w-4 h-4 text-[var(--primary)]" /> {item.name}
                 </Link>
               ))}
             </div>
@@ -177,46 +158,47 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         )}
       </header>
 
-      {/* Main Container */}
-      <main className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8 min-h-[70vh]">
-         {children}
+      <main className="app-container py-6 pb-24 lg:pb-10 min-h-[65vh]">
+        {children}
       </main>
 
-      {/* Footer */}
-      <footer className="bg-[var(--bg-surface)] border-t border-[var(--border-color)] py-20 mt-20 transition-colors duration-500">
-         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-16">
-            <div className="col-span-1 md:col-span-2">
-               <div className="flex items-center gap-3 mb-8">
-                  <div className="bg-[var(--primary)] p-2 rounded-xl shadow-lg shadow-red-500/20">
-                     <Ticket className="w-5 h-5 text-white" />
-                  </div>
-                  <span className="text-2xl font-black text-[var(--text-main)] tracking-tighter uppercase">PULSE</span>
-               </div>
-               <p className="text-[var(--text-muted)] text-[10px] font-black leading-relaxed max-w-sm uppercase tracking-widest">
-                  Your all-in-one platform for discovering, booking, and managing events with ease.
-               </p>
+      <div className="bottom-nav lg:hidden">
+        {bottomNavItems.map((item) => {
+          const isActive = 
+            location.pathname === item.href ||
+            (item.href === '/discover' && (location.pathname === '/' || location.pathname.startsWith('/event') || location.pathname.startsWith('/discover'))) ||
+            (item.href === '/bookings' && location.pathname.startsWith('/ticket')) ||
+            (item.href === '/profile' && location.pathname === '/profile');
+          return (
+            <Link key={item.name} to={item.href} className={`bottom-nav__link ${isActive ? 'bottom-nav__link--active' : ''}`}>
+              <item.icon className="w-5 h-5" />
+              <span className="bottom-nav__label">{item.name}</span>
+            </Link>
+          );
+        })}
+      </div>
+
+      <footer className="bg-[var(--bg-surface)] border-t border-[var(--border-color)] py-12 mt-16 text-[var(--text-muted)] hidden lg:block">
+        <div className="app-container grid grid-cols-1 md:grid-cols-4 gap-8 text-xs">
+          <div>
+            <div className="flex items-center gap-2 mb-4 text-[var(--text-main)]">
+              <div className="bg-[var(--primary)] p-1.5 rounded-xl"><Ticket className="w-4 h-4 text-white" /></div>
+              <span className="font-bold tracking-tight">PULSE</span>
             </div>
-            <div>
-               <h4 className="font-black text-[10px] uppercase tracking-[0.4em] text-[var(--text-muted)] mb-8 opacity-50">Quick Links</h4>
-               <ul className="space-y-5 text-[10px] font-black text-[var(--text-main)] uppercase tracking-[0.2em]">
-                  <li><Link to="/" className="hover:text-[var(--primary)] transition-colors">Explore Events</Link></li>
-                  <li><Link to="/bookings" className="hover:text-[var(--primary)] transition-colors">My Tickets</Link></li>
-                  <li><Link to="/scanner" className="hover:text-[var(--primary)] transition-colors">Entry Validator</Link></li>
-               </ul>
-            </div>
-            <div>
-               <h4 className="font-black text-[10px] uppercase tracking-[0.4em] text-[var(--text-muted)] mb-8 opacity-50">Contact</h4>
-               <p className="text-[10px] font-black text-[var(--text-main)] uppercase tracking-[0.2em] leading-loose">
-                  Pulse Events HQ<br/>
-                  Mumbai, India<br/>
-                  support@pulse.events
-               </p>
-            </div>
-         </div>
-         <div className="max-w-7xl mx-auto px-4 mt-20 pt-10 border-t border-[var(--border-color)] flex justify-between items-center text-[8px] font-bold text-[var(--text-muted)] uppercase tracking-widest">
-            <span>© 2026 PULSE EVENTS. All rights reserved.</span>
-            <span>Built with ❤️ in India</span>
-         </div>
+            <div>Premium event experiences.</div>
+          </div>
+          <div className="space-y-1.5">
+            <div className="font-semibold text-[var(--text-main)] mb-1">Platform</div>
+            <div><Link to="/discover" className="hover:text-[var(--text-main)]">Explore</Link></div>
+            <div><Link to="/bookings" className="hover:text-[var(--text-main)]">Tickets</Link></div>
+          </div>
+          <div className="space-y-1.5">
+            <div className="font-semibold text-[var(--text-main)] mb-1">Company</div>
+            <div>Mumbai, India</div>
+            <div>support@pulse.events</div>
+          </div>
+          <div className="text-[10px] pt-8 md:pt-0">© 2026 Pulse Events</div>
+        </div>
       </footer>
     </div>
   );
