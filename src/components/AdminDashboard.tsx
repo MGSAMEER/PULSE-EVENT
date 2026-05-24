@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
-import { Users, Activity, PlusCircle, Tag, Download, Send, Megaphone, Trash2, X, Check, Edit3, Moon, Sun, RefreshCw } from 'lucide-react';
+import { Users, PlusCircle, Download, Send, Megaphone, Trash2, X, Check, Edit3, Moon, Sun, RefreshCw } from 'lucide-react';
 import { Bar, Line } from 'react-chartjs-2';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';

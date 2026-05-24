@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import EventCard from './EventCard';
 import { Search, Loader2, X, Filter } from 'lucide-react';
-import { motion, Variants } from 'framer-motion';
 import useEmblaCarousel from 'embla-carousel-react';
 
 const EventCardSkeleton: React.FC = () => (
@@ -43,7 +42,6 @@ const EventList: React.FC = () => {
   const [search, setSearch]                     = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedLocation, setSelectedLocation] = useState('All');
-  const [showSuggestions, setShowSuggestions]   = useState(false);
   const [recentSearches, setRecentSearches]     = useState<string[]>([]);
   const [isSearchOpen, setIsSearchOpen]         = useState(false);
 
@@ -168,16 +166,6 @@ const EventList: React.FC = () => {
     observer.observe(sentinelRef.current);
     return () => observer.disconnect();
   }, [fetchMore]);
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
-  };
 
   return (
     <div className="space-y-6 pb-6 sm:space-y-8 sm:pb-8">

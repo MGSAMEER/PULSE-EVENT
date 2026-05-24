@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Card, CardContent } from './card';
-import { CircleDollarSign, TrendingUp, UserPlus, Zap } from 'lucide-react';
+import { CircleDollarSign, TrendingUp, UserPlus } from 'lucide-react';
 import { Area, AreaChart, ResponsiveContainer } from 'recharts';
 
 interface MetricProps {

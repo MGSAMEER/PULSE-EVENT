@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { Ticket, Calendar, MapPin, Loader2, Search } from 'lucide-react';
+import { Ticket, Calendar, MapPin, Loader2 } from 'lucide-react';
 import api from '../services/api';
 
 interface Booking {
@@ -19,7 +18,6 @@ interface Booking {
 }
 
 const Bookings: React.FC = () => {
-  const { user } = useAuth();
   const navigate = useNavigate();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
