@@ -100,19 +100,16 @@ const EventList: React.FC = () => {
   const selectSuggestion = (term: string) => {
     setSearch(term);
     saveRecentSearch(term);
-    setShowSuggestions(false);
   };
 
   const clearFilters = () => {
     setSearch('');
     setSelectedCategory('All');
     setSelectedLocation('All');
-    setShowSuggestions(false);
   };
 
   const openSearchOverlay = () => {
     setIsSearchOpen(true);
-    setShowSuggestions(false);
   };
 
   const closeSearchOverlay = () => {
